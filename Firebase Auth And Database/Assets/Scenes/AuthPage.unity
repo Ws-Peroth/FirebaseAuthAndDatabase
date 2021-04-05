@@ -179,11 +179,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_FontSize: 70
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
+    m_MinSize: 7
+    m_MaxSize: 70
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 0
@@ -257,11 +257,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_FontSize: 70
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
+    m_MinSize: 7
+    m_MaxSize: 70
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 0
@@ -295,7 +295,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &272579580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -374,7 +374,7 @@ RectTransform:
   - {fileID: 774672518}
   - {fileID: 298961963}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -523,7 +523,7 @@ GameObject:
   - component: {fileID: 298961965}
   - component: {fileID: 298961964}
   m_Layer: 5
-  m_Name: ErrorToast
+  m_Name: SignUpErrorToast
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -894,7 +894,7 @@ GameObject:
   - component: {fileID: 442953210}
   - component: {fileID: 442953209}
   m_Layer: 5
-  m_Name: ErrorToast
+  m_Name: LoginErrorToast
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -971,7 +971,7 @@ GameObject:
   - component: {fileID: 560238975}
   - component: {fileID: 560238974}
   m_Layer: 5
-  m_Name: Button
+  m_Name: LoginErrorToastExitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1039,7 +1039,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 560238975}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1890087467}
+        m_MethodName: ExitLoginErrorToast
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &560238975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1460,8 +1471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 847d3214ecaf9c846afdb22357dbca84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  signUpErrorToast: {fileID: 0}
-  loginErrorToast: {fileID: 0}
+  ui: {fileID: 1890087467}
 --- !u!4 &668925884
 Transform:
   m_ObjectHideFlags: 0
@@ -1474,7 +1484,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &676538692
 GameObject:
@@ -1978,7 +1988,7 @@ GameObject:
   - component: {fileID: 809524859}
   - component: {fileID: 809524858}
   m_Layer: 5
-  m_Name: ErrorText
+  m_Name: SignUpErrorText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2451,7 +2461,7 @@ GameObject:
   - component: {fileID: 1214836602}
   - component: {fileID: 1214836601}
   m_Layer: 5
-  m_Name: Button
+  m_Name: SignUpErrorToastExitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2519,7 +2529,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1214836602}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1890087467}
+        m_MethodName: ExitSignErrorToast
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1214836602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2653,7 +2674,7 @@ RectTransform:
   - {fileID: 613862400}
   - {fileID: 442953208}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2926,11 +2947,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_FontSize: 70
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
+    m_MinSize: 7
+    m_MaxSize: 70
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 0
@@ -3172,7 +3193,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1588815698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3247,7 +3268,7 @@ RectTransform:
   - {fileID: 1268404649}
   - {fileID: 287398589}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3572,7 +3593,7 @@ RectTransform:
   - {fileID: 2108787776}
   - {fileID: 390031203}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3595,6 +3616,10 @@ MonoBehaviour:
   startPage: {fileID: 1588815697}
   loginPage: {fileID: 1259448316}
   signUpPage: {fileID: 272579579}
+  signUpErrorToast: {fileID: 298961962}
+  loginErrorToast: {fileID: 442953207}
+  signUpErrorToastMessage: {fileID: 809524858}
+  loginErrorToastMessage: {fileID: 1972542894}
   loginEmail: {fileID: 1925224171}
   loginPassword: {fileID: 639308018}
   signUpEmail: {fileID: 676538694}
@@ -4008,11 +4033,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_FontSize: 70
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
+    m_MinSize: 7
+    m_MaxSize: 70
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 0
@@ -4040,7 +4065,7 @@ GameObject:
   - component: {fileID: 1972542895}
   - component: {fileID: 1972542894}
   m_Layer: 5
-  m_Name: ErrorText
+  m_Name: LoginErrorText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4242,11 +4267,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_FontSize: 70
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
+    m_MinSize: 7
+    m_MaxSize: 70
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 0
