@@ -11,7 +11,9 @@ public class AuthManager : MonoBehaviour
     private FirebaseAuth auth; // 인증 객체 불러오기
 
     public static AuthManager authManager;
-    public AuthUI ui;
+    public AuthUI authUI;
+
+
 
     void Start()
     {
@@ -29,10 +31,12 @@ public class AuthManager : MonoBehaviour
             "email = " + email +
             "\npassword = " + password);
 
+        //StartCoroutine();
+
         // 이메일과 비밀번호로 가입하는 함수
         auth.SignInWithEmailAndPasswordAsync(email, password).ContinueWith(
             task =>
-            {
+            {               
                 if (task.IsCompleted && !task.IsFaulted && !task.IsCanceled)
                 {
                     print(email + " 로 로그인 하셨습니다.");
@@ -41,11 +45,14 @@ public class AuthManager : MonoBehaviour
                 else
                 {
                     print("로그인에 실패하셨습니다.");
-                    ui.ShowLoginErrorToast("로그인에 실패하셨습니다.");
+                    authUI.ShowLoginErrorMessage("로그인에 실패하셨습니다.");
+                    //authUI.loginComplete = true;
                 }
             }
         );
     }
+
+
 
     public void DoSignUp(string email, string password, string name)
     {
@@ -61,7 +68,7 @@ public class AuthManager : MonoBehaviour
                  if (!task.IsCanceled && !task.IsFaulted)
                  {
                      print(email + " 로 회원가입 하셨습니다.");
-                     ui.GetComponent<AuthUI>().SignUpPageToLoginPage();
+                     authUI.GetComponent<AuthUI>().SignUpPageToLoginPage();
                  }
                  else
                  {
@@ -81,7 +88,7 @@ public class AuthManager : MonoBehaviour
         if (taskStatus == 1)
             ErrorCodeToErrorMessage(errorCode);
         else if (taskStatus == 2)
-            ui.ShowSignUpErrorToast("Create User With Email And Password Async was canceled.");
+            authUI.ShowSignUpErrorMessage("Create User With Email And Password Async was canceled.");
         else
             print("ERROR");
         return;
@@ -95,7 +102,7 @@ public class AuthManager : MonoBehaviour
 
         result = result.Split('\n')[0];
 
-        ui.ShowSignUpErrorToast(result);
+        authUI.ShowSignUpErrorMessage(result);
 
     }
 }

@@ -9,11 +9,12 @@ public class AuthUI : MonoBehaviour
     public GameObject startPage;
     public GameObject loginPage;
     public GameObject signUpPage;
-    public GameObject signUpErrorToast;
-    public GameObject loginErrorToast;
 
-    public Text signUpErrorToastMessage;
-    public Text loginErrorToastMessage;
+    public GameObject signUpErrorMessageRect;
+    public GameObject loginErrorMessageRect;
+
+    public Text signUpErrorMessage;
+    public Text loginErrorMessage;
 
     public InputField loginEmail;
     public InputField loginPassword;
@@ -28,15 +29,19 @@ public class AuthUI : MonoBehaviour
 
     void Start()
     {
+        PageInit();
+    }
+
+    public void PageInit()
+    {
         currentPageNumber = 0;
 
-        signUpErrorToast.SetActive(false);
-        loginErrorToast.SetActive(false);
+        signUpErrorMessageRect.SetActive(false);
+        loginErrorMessageRect.SetActive(false);
         backGround.SetActive(true);
         startPage.SetActive(true);
         loginPage.SetActive(false);
         signUpPage.SetActive(false);
-
     }
 
     public void StartLoginButtonDown() // Start 페이지의 LoginButton 실행 코드
@@ -86,39 +91,45 @@ public class AuthUI : MonoBehaviour
         AuthManager.authManager.DoLogin(email, password);
         loginEmail.text = "";
         loginPassword.text = "";
-
     }
 
     public void SignUpPageToLoginPage()
     {
         print("call function : " + nameof(SignUpPageToLoginPage));
+
         startPage.SetActive(false);
         loginPage.SetActive(true);
         signUpPage.SetActive(false);
     }
 
-    public void ShowSignUpErrorToast(string errorMessage)
+    public void ShowSignUpErrorMessage(string errorMessage)
     {
-        signUpErrorToast.SetActive(true);
-        signUpErrorToastMessage.text = errorMessage;
+        print("Call function : " + nameof(ShowSignUpErrorMessage));
+        print(errorMessage);
+
+        signUpErrorMessageRect.SetActive(true);
+        signUpErrorMessage.text = errorMessage;
     }
 
-    public void ExitSignErrorToast()
+    public void ExitSignErrorMessage()
     {
-        signUpErrorToastMessage.text = "";
-        signUpErrorToast.SetActive(false);
+        signUpErrorMessage.text = "";
+        signUpErrorMessageRect.SetActive(false);
     }
 
-    public void ShowLoginErrorToast(string errorMessage)
+    public void ShowLoginErrorMessage(string errorMessage)
     {
-        loginErrorToast.SetActive(true);
-        loginErrorToastMessage.text = errorMessage;
+        print("Call function : " + nameof(ShowLoginErrorMessage));
+        print(errorMessage);
+        //Debug.Log("loginErrorMessageRect : " + loginErrorMessageRect);
+        loginErrorMessageRect.SetActive(true);
+        loginErrorMessage.text = errorMessage;
     }
 
-    public void ExitLoginErrorToast()
+    public void ExitLoginErrorMessage()
     {
-        loginErrorToastMessage.text = "";
-        loginErrorToast.SetActive(false);
+        loginErrorMessage.text = "";
+        loginErrorMessageRect.SetActive(false);
     }
 
 }
