@@ -26,6 +26,7 @@ public class AuthUI : MonoBehaviour
     public int currentPageNumber;
     // 0 : Start Page, 1 : Login Page, 2 : SignUp Page
 
+    private bool isSignSuccess;
 
     void Start()
     {
@@ -35,6 +36,7 @@ public class AuthUI : MonoBehaviour
     public void PageInit()
     {
         currentPageNumber = 0;
+        isSignSuccess = false;
 
         signUpErrorMessageRect.SetActive(false);
         loginErrorMessageRect.SetActive(false);
@@ -95,17 +97,14 @@ public class AuthUI : MonoBehaviour
 
     public void SignUpPageToLoginPage()
     {
-        print("call function : " + nameof(SignUpPageToLoginPage));
-
         startPage.SetActive(false);
         loginPage.SetActive(true);
         signUpPage.SetActive(false);
     }
 
-    public void ShowSignUpErrorMessage(string errorMessage)
+    public void ShowSignUpErrorMessage(string errorMessage, bool isSignSuccess)
     {
-        print("Call function : " + nameof(ShowSignUpErrorMessage));
-        print(errorMessage);
+        this.isSignSuccess = isSignSuccess;
 
         signUpErrorMessageRect.SetActive(true);
         signUpErrorMessage.text = errorMessage;
@@ -115,13 +114,16 @@ public class AuthUI : MonoBehaviour
     {
         signUpErrorMessage.text = "";
         signUpErrorMessageRect.SetActive(false);
+
+        if (isSignSuccess)
+        {
+            SignUpPageToLoginPage();
+            isSignSuccess = false;
+        }
     }
 
     public void ShowLoginErrorMessage(string errorMessage)
     {
-        print("Call function : " + nameof(ShowLoginErrorMessage));
-        print(errorMessage);
-        //Debug.Log("loginErrorMessageRect : " + loginErrorMessageRect);
         loginErrorMessageRect.SetActive(true);
         loginErrorMessage.text = errorMessage;
     }

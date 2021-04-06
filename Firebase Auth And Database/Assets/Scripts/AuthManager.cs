@@ -1,8 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
 using Firebase.Auth;
 
 
@@ -13,7 +10,9 @@ public class AuthManager : MonoBehaviour
     public static AuthManager authManager;
     public AuthUI authUI;
 
-
+    private int errorFlag;
+    private int taskStatus;
+    private string signUpExceptionMessage;
 
     void Start()
     {
@@ -27,11 +26,9 @@ public class AuthManager : MonoBehaviour
 
     public void DoLogin(string email, string password)
     {
-        print("TODO : Login\n" +
-            "email = " + email +
-            "\npassword = " + password);
-
-        //StartCoroutine();
+        errorFlag = -2;
+        signUpExceptionMessage = "";
+        StartCoroutine(WaitLoginFinish());
 
         // 이메일과 비밀번호로 가입하는 함수
         auth.SignInWithEmailAndPasswordAsync(email, password).ContinueWith(
@@ -39,27 +36,43 @@ public class AuthManager : MonoBehaviour
             {               
                 if (task.IsCompleted && !task.IsFaulted && !task.IsCanceled)
                 {
-                    print(email + " 로 로그인 하셨습니다.");
-                    print("User ID : " + auth.CurrentUser.UserId);
+                    errorFlag = 0;
                 }
                 else
                 {
-                    print("로그인에 실패하셨습니다.");
-                    authUI.ShowLoginErrorMessage("로그인에 실패하셨습니다.");
-                    //authUI.loginComplete = true;
+                    errorFlag = -1;
                 }
             }
         );
     }
 
+    IEnumerator WaitLoginFinish()
+    {
+        while(errorFlag == -2)
+        {
+            yield return null;
+        }
+        LoginExcptions();
+    }
 
+    public void LoginExcptions()
+    {
+        if(errorFlag == -1)
+        {
+            authUI.ShowLoginErrorMessage("로그인에 실패하셨습니다.");
+        }
+        else if(errorFlag == 0)
+        {
+            print("User ID : " + auth.CurrentUser.UserId);
+        }
+    }
 
     public void DoSignUp(string email, string password, string name)
     {
-        print("TODO : SignUp\n" +
-            "email = " + email +
-            "\npassword = " + password +
-            "\nname = " + name);
+        taskStatus = -3;
+        signUpExceptionMessage = "";
+        StartCoroutine(WaitSignUpFinish());
+        print("TODO : SignUp\n" + "email = " + email + "\npassword = " + password + "\nname = " + name);
 
         // 이메일과 비밀번호로 가입하는 함수
         auth.CreateUserWithEmailAndPasswordAsync(email, password).ContinueWith(
@@ -67,30 +80,43 @@ public class AuthManager : MonoBehaviour
              {
                  if (!task.IsCanceled && !task.IsFaulted)
                  {
-                     print(email + " 로 회원가입 하셨습니다.");
-                     authUI.GetComponent<AuthUI>().SignUpPageToLoginPage();
+                     taskStatus = 1;                     
                  }
                  else
                  {
-                     int taskStatus = 0;
-                     if (task.IsFaulted) taskStatus = 1;
-                     if (task.IsCanceled) taskStatus = 2;
-                     SignUpExceptions(taskStatus, task.Exception.ToString());
+                     if (task.IsFaulted) taskStatus = -1;
+                     else if (task.IsCanceled) taskStatus = -2;
+                     else taskStatus = 0;
+                     signUpExceptionMessage = task.Exception.ToString();
                  }
              }
          );
     }
 
+    IEnumerator WaitSignUpFinish()
+    {
+        while(taskStatus == -3)
+        {
+            yield return null;
+        }
+        if(taskStatus == 1)
+        {
+            authUI.ShowSignUpErrorMessage("회원가입에 성공하였습니다.", true);
+        }
+        else
+        {
+            SignUpExceptions(taskStatus, signUpExceptionMessage);
+        }
+    }
+
     private void SignUpExceptions(int taskStatus, string errorCode)
     {
-        print("회원가입에 실패하셨습니다.");
-
-        if (taskStatus == 1)
+        if (taskStatus == -1)
             ErrorCodeToErrorMessage(errorCode);
-        else if (taskStatus == 2)
-            authUI.ShowSignUpErrorMessage("Create User With Email And Password Async was canceled.");
+        else if (taskStatus == -2)
+            authUI.ShowSignUpErrorMessage("Create User With Email And Password Async was canceled.", false);
         else
-            print("ERROR");
+            authUI.ShowSignUpErrorMessage("ERROR", false);
         return;
     }
 
@@ -102,7 +128,6 @@ public class AuthManager : MonoBehaviour
 
         result = result.Split('\n')[0];
 
-        authUI.ShowSignUpErrorMessage(result);
-
+        authUI.ShowSignUpErrorMessage(result, false);
     }
 }
