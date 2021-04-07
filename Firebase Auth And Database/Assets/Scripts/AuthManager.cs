@@ -84,10 +84,13 @@ public class AuthManager : MonoBehaviour
                  }
                  else
                  {
+                     signUpExceptionMessage = task.Exception.ToString();
+                     print("get exceptions " + signUpExceptionMessage);
+
                      if (task.IsFaulted) taskStatus = -1;
                      else if (task.IsCanceled) taskStatus = -2;
                      else taskStatus = 0;
-                     signUpExceptionMessage = task.Exception.ToString();
+                     
                  }
              }
          );
@@ -99,12 +102,14 @@ public class AuthManager : MonoBehaviour
         {
             yield return null;
         }
+
         if(taskStatus == 1)
         {
             authUI.ShowSignUpErrorMessage("회원가입에 성공하였습니다.", true);
         }
         else
         {
+            print("in couroutine : " + signUpExceptionMessage);
             SignUpExceptions(taskStatus, signUpExceptionMessage);
         }
     }
@@ -112,7 +117,10 @@ public class AuthManager : MonoBehaviour
     private void SignUpExceptions(int taskStatus, string errorCode)
     {
         if (taskStatus == -1)
+        {
+            print("throw error code : " + errorCode);
             ErrorCodeToErrorMessage(errorCode);
+        }
         else if (taskStatus == -2)
             authUI.ShowSignUpErrorMessage("Create User With Email And Password Async was canceled.", false);
         else
@@ -122,6 +130,7 @@ public class AuthManager : MonoBehaviour
 
     private void ErrorCodeToErrorMessage(string errorMessage)
     {
+        print(errorMessage);
         string result = errorMessage.Split(
                new string[] { "Firebase.FirebaseException:" },
                System.StringSplitOptions.None)[1];
